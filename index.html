@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Column 1</th>
+          <th>Column 2</th>
+          <th>Column 3</th>
+
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <script>
+      // Fetch the CSV file
+      fetch('data.csv')
+        .then(response => response.text())
+        .then(data => {
+          // Split the CSV data into an array of rows
+          const rows = data.split('\n');
+
+          // Loop through each row
+          for (const row of rows) {
+            // Split the row into columns
+            const columns = row.split(',');
+
+            // If the row has at least one column, add it to the table
+            if (columns.length >= 1) {
+              const table = document.getElementById('dataTable');
+              const tbody = table.getElementsByTagName('tbody')[0];
+
+              // Create a new table row
+              const tr = document.createElement('tr');
+
+              // Loop through each column in the row
+              for (const column of columns) {
+                // Create a new table cell
+                const td = document.createElement('td');
+                td.innerHTML = column;
+
+                // Add the cell to the row
+                tr.appendChild(td);
+              }
+
+              // Add the row to the table body
+              tbody.appendChild(tr);
+            }
+          }
+        });
+    </script>
+  </body>
+</html>
